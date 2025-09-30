@@ -10,14 +10,12 @@ int main() {
     while (T--) {
         int n;
         cin >> n;
-        if (n <= 3) {
-            cout << n - 1 << "\n";
-            continue;
+        int minDigit = INT_MAX;
+        while (n > 0) {
+            minDigit = min(minDigit, n % 10);
+            n /= 10;
         }
-        if (n % 2 == 0)
-            cout << 2 << "\n";
-        else
-            cout << 3 << "\n";
+        cout << minDigit << "\n";
     }
     return 0;
 }

@@ -10,14 +10,7 @@ int main() {
     while (T--) {
         int n;
         cin >> n;
-        if (n <= 3) {
-            cout << n - 1 << "\n";
-            continue;
-        }
-        if (n % 2 == 0)
-            cout << 2 << "\n";
-        else
-            cout << 3 << "\n";
+        cout << n / 2 + n % 2 << "\n";
     }
     return 0;
 }
