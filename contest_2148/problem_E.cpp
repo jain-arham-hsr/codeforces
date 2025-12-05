@@ -10,37 +10,28 @@ int main() {
     while (T--) {
         int n, k;
         cin >> n >> k;
-        vector<int> counts(n, 0);
-        vector<int> input(n);
-        int res = 0;
+        unordered_map<int, int> count;
         for (int i = 0; i < n; i++) {
             int num;
             cin >> num;
-            counts[num]++;
-            input.push_back(num);
+            count[num]++;
         }
-        bool hasAwesomeSubarrays = true;
-        for (auto &x : counts) {
-            if (x % k != 0) {
-                cout << 0;
-                hasAwesomeSubarrays = false;
+        bool isPossible = true;
+        for (auto it = count.begin(); it != count.end(); it++) {
+            if (it->second % k != 0) {
+                isPossible = false;
+                break;
             }
-            x /= k;
+            count[it->first] %= k;
         }
-        if (!hasAwesomeSubarrays)
+        if (!isPossible) {
+            cout << 0;
             continue;
-        vector<int> currentCounts = counts;
-        int l = 0, r = 0;
-        while (r < n) {
-            if (counts[input[r]] > 0) {
-                counts[input[r]]--;
-            } else {
-                int n = r - l;
-                res += n * (n + 1) / 2;
-                l = r;
-                currentCounts = counts;
-            }
-            r++;
+        }
+        int windowSize = 0;
+        for (auto it = count.begin(); it != count.end(); it++) {
+            windowSize += it->second;
+            
         }
     }
     return 0;

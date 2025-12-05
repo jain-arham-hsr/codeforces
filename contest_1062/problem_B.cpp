@@ -7,20 +7,31 @@ int main() {
 
     int n;
     cin >> n;
-    int currentNum = 2;
-    bool needsMultiplication = false;
-    int lastFactorPower;
-    while ( n > 1) {
-        int primeFactorPower = 0;
-        while (n % currentNum == 0) {
-            primeFactorPower++;
+    int minVal = 1;
+    bool needsMult = false;
+    int currentFactor = 2;
+    int lastPower = 0;
+    int maxPower = 1;
+    while (n > 1) {
+        if (n % currentFactor == 0)
+            minVal *= currentFactor;
+        int power = 0;
+        while (n % currentFactor == 0) {
+            n /= currentFactor;
+            power++;
         }
-        if (primeFactorPower != 0) {
-            lastFactorPower = primeFactorPower;
+        if (lastPower != 0 && power != 0 && lastPower != power) {
+            needsMult = true;
+            lastPower = power;
         }
-        if ()
-
+        if (floor(log2(power)) != log2(power)) {
+            needsMult = true;
+        }
+        maxPower = max(power, maxPower);
+        currentFactor++;
+        if (lastPower == 0)
+            lastPower = power;
     }
-    
+    cout << minVal << " " << ceil(log2(maxPower)) + needsMult << "\n";
     return 0;
 }

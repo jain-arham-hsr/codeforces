@@ -10,27 +10,28 @@ int main() {
     while (T--) {
         int n;
         cin >> n;
-        vector<long> oddDandelions;
-        oddDandelions.reserve(n);
-        long long sumOfEvenDandelions = 0;
+        long long evenSum = 0;
+        vector<long long> oddDandelionFields;
+        oddDandelionFields.reserve(n);
         for (int i = 0; i < n; i++) {
-            long numOfDandelions;
-            cin >> numOfDandelions;
-            if (numOfDandelions % 2 == 0) {
-                sumOfEvenDandelions += numOfDandelions;
-            } else {
-                oddDandelions.push_back(numOfDandelions);
-            }
+            long long num;
+            cin >> num;
+            if (num % 2 == 0)
+                evenSum += num;
+            else
+                oddDandelionFields.push_back(num);
         }
-        long long maxDandelions = 0;
-        if (oddDandelions.size() > 0) {
-            maxDandelions += sumOfEvenDandelions;
-            sort(oddDandelions.begin(), oddDandelions.end());
-            maxDandelions += accumulate(oddDandelions.end() -
-                                            ((oddDandelions.size() + 1) / 2),
-                                        oddDandelions.end(), 0);
+        if (oddDandelionFields.size() == 0) {
+            cout << 0 << "\n";
+            continue;
         }
-        cout << maxDandelions << "\n";
+        long long res = evenSum;
+        sort(oddDandelionFields.begin(), oddDandelionFields.end());
+        for (int i = oddDandelionFields.size() / 2;
+             i < oddDandelionFields.size(); i++) {
+            res += oddDandelionFields[i];
+        }
+        cout << res << "\n";
     }
     return 0;
 }

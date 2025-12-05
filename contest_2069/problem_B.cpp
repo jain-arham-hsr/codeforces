@@ -10,37 +10,30 @@ int main() {
     while (T--) {
         int n, m;
         cin >> n >> m;
-        unordered_map<int, bool> oddMap;
-        unordered_map<int, bool> evenMap;
-        bool areDisjoint = true;
+        vector<vector<int>> grid(n, vector<int>(m));
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                int num;
-                cin >> num;
-                if ((i + j) % 2 == 0) {
-                    evenMap[num] = true;
-                    if (oddMap[num] == 1)
-                        areDisjoint = false;
-                } else {
-                    oddMap[num] = true;
-                    if (evenMap[num] == true)
-                        areDisjoint = false;
-                }
+                cin >> grid[i][j];
             }
         }
-        int res = -!areDisjoint - 1;
-        for (auto it = oddMap.begin(); it != oddMap.end(); it++) {
-            if (it->second == 1) {
-                res++;
+        unordered_map<int, int> steps;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (steps[grid[i][j]] == 0)
+                    steps[grid[i][j]] = 1;
+                if (i != 0 && grid[i - 1][j] == grid[i][j])
+                    steps[grid[i][j]] = 2;
+                if (j != 0 && grid[i][j - 1] == grid[i][j])
+                    steps[grid[i][j]] = 2;
             }
         }
-        for (auto it = evenMap.begin(); it != evenMap.end(); it++) {
-            if (it->second == 1) {
-                res++;
-            }
+        int totalSteps = 0;
+        int maxSteps = 0;
+        for (auto step : steps) {
+            totalSteps += step.second;
+            maxSteps = max(maxSteps, step.second);
         }
-        // cout << oddMap[1] << "\n";
-        cout << res << "\n";
+        cout << totalSteps - maxSteps << "\n";
     }
     return 0;
 }
